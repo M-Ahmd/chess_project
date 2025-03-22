@@ -1,3 +1,4 @@
+#pragma once
 #include<iostream>
 using namespace std;
 typedef struct cooridnates
@@ -46,28 +47,29 @@ private:
 public:
     board()
     {
-        arr[0][0] = black_rook;
-        arr[0][1] = black_knight;
-        arr[0][2] = black_bishob;
-        arr[0][3] = black_queen;
-        arr[0][4] = black_king;
-        arr[0][5] = black_bishob;
-        arr[0][6] = black_knight;
-        arr[0][7] = black_rook;
+
+        arr[0][0] = white_rook;
+        arr[0][1] = white_knight;
+        arr[0][2] = white_bishob;
+        arr[0][3] = white_king;
+        arr[0][4] = white_queen;
+        arr[0][5] = white_bishob;
+        arr[0][6] = white_knight;
+        arr[0][7] = white_rook;
         for(int i = 0; i < 8; i++)
-            arr[1][i] = black_pawn;
+            arr[1][i] = white_pawn;
         for(int i = 0; i < 8; i++)
-            arr[6][i] = white_pawn;
-        arr[7][0] = white_rook;
-        arr[7][1] = white_knight;
-        arr[7][2] = white_bishob;
-        arr[7][3] = white_queen;
-        arr[7][4] = white_king;
-        arr[7][5] = white_bishob;
-        arr[7][6] = white_knight;
-        arr[7][7] = white_rook;
+            arr[6][i] = black_pawn;
+        arr[7][0] = black_rook;
+        arr[7][1] = black_knight;
+        arr[7][2] = black_bishob;
+        arr[7][3] = black_king;
+        arr[7][4] = black_queen;
+        arr[7][5] = black_bishob;
+        arr[7][6] = black_knight;
+        arr[7][7] = black_rook;
     }
-    void print_board_for_white()
+    void print_board_for_black()
     {
         for(int i = 0; i < 8; i++)
         {
@@ -77,7 +79,7 @@ public:
         }
         cout << endl;
     }
-    void print_board_for_black()
+    void print_board_for_white()
     {
         for(int i = 7; i >= 0; i--)
         {
@@ -91,6 +93,12 @@ public:
     {
 	    return arr[location.x][location.y] == 0;
     }
-    
+    coor square_to_coordinates(string &square)
+    {
+        coor ret;
+        ret.x = square[0] - 'a';
+        ret.y = square[1] - '1';
+        return ret;
+    }
 
 };
