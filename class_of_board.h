@@ -11,7 +11,14 @@ black_rook = 7, white_queen = 10, black_queen = 9, white_king = 12, black_king =
 class board
 {
 private:
+    //this is the grid of the game.
     int arr[8][8]{};
+    /**
+     * convert - is a function for convert pieces into characters to
+     * print it in the console
+     * @num: is the number of the piece
+     * return: return character of piece number
+     */
     char convert(int num)
     {
         switch (num)
@@ -45,6 +52,11 @@ private:
         }
     }
 public:
+    /**
+     * board - is a constractor to init. the board of chess
+     * 
+     * return: this is a void function
+     */
     board()
     {
 
@@ -69,6 +81,11 @@ public:
         arr[7][6] = black_knight;
         arr[7][7] = black_rook;
     }
+    /**
+     * print_board_for_black - a function to print the chess board 
+     * frame of refrence black
+     * return: a void function
+     */
     void print_board_for_black()
     {
         for(int i = 0; i < 8; i++)
@@ -79,6 +96,11 @@ public:
         }
         cout << endl;
     }
+    /**
+     * print_board_for_white - a function to print the chess board 
+     * frame of refrence white
+     * return: a void function
+     */
     void print_board_for_white()
     {
         for(int i = 7; i >= 0; i--)
@@ -89,10 +111,21 @@ public:
         }
         cout << endl;
     }
+    /**
+     * free - checks if the given loction is occupied or free
+     * @location: is a coordinate of the square location
+     * return: true if the square are free and false if not
+     */
     bool free(coor &location)
     {
 	    return arr[location.x][location.y] == 0;
     }
+    /**
+     * square_to_coordinates - is a function convert the string
+     * to the coordinates to used in perposes
+     * @square: is the input square we want to convert
+     * return: always the loction of square
+     */
     coor square_to_coordinates(string &square)
     {
         coor ret;
