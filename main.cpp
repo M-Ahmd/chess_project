@@ -2,8 +2,7 @@
 int main()
 {
     board b1;
-    b1.print_board();
+    b1.print_board_for_white();
+    b1.print_board_for_black();
     cout << endl;
-    coor c = {3, 4};
-    cout << b1.free(c);
 }

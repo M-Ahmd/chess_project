@@ -67,7 +67,7 @@ public:
         arr[7][6] = white_knight;
         arr[7][7] = white_rook;
     }
-    void print_board()
+    void print_board_for_white()
     {
         for(int i = 0; i < 8; i++)
         {
@@ -75,9 +75,22 @@ public:
                 cout << convert(arr[i][j]) << " ";
             cout << "\n";
         }
+        cout << endl;
+    }
+    void print_board_for_black()
+    {
+        for(int i = 7; i >= 0; i--)
+        {
+            for(int j = 7; j >= 0; j--)
+                cout << convert(arr[i][j]) << " ";
+            cout << endl;
+        }
+        cout << endl;
     }
     bool free(coor &location)
     {
 	    return arr[location.x][location.y] == 0;
     }
+    
+
 };
