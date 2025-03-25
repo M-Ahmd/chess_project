@@ -8,6 +8,12 @@ public:
 
     knight(pices id, coor &square_occiped) : 
     piece(id, square_occiped){}
+    
+    /**
+     * range_of_motion - is a funtion to calculate all moves 
+     * for the knight
+     * return: a set of all moves that possible
+     */
     set<coor> range_of_motion() override
     {
         set<coor> motions;
@@ -36,7 +42,18 @@ public:
         if(true_coor(south_right) && enimy_loction(south_right)) motions.insert(south_right);
         return motions;
     }
-    
+    /**
+     * kill - this funcion is made to kill another pieces
+     * @input: is the coordinates of the spacific pieces
+     * return: true if he capture else false
+     */
+    bool kill(coor &input) override
+    {
+        set<coor> motions = range_of_motion();
+        if(motions.find(input) != motions.end() || board_one.free(input)) return false;
+        die(input);
+        return true;
+    }
 
 
 

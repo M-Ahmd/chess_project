@@ -11,7 +11,7 @@ black_rook = 7, white_queen = 10, black_queen = 9, white_king = 12, black_king =
 class board
 {
 private:
-    //this is the grid of the game.
+    //this is the grid of the game , {} init. all values to be zeros.
     int arr[8][8]{};
     /**
      * convert - is a function for convert pieces into characters to
@@ -63,8 +63,8 @@ public:
         arr[0][0] = white_rook;
         arr[0][1] = white_knight;
         arr[0][2] = white_bishob;
-        arr[0][3] = white_king;
-        arr[0][4] = white_queen;
+        arr[0][3] = white_queen;
+        arr[0][4] = white_king;
         arr[0][5] = white_bishob;
         arr[0][6] = white_knight;
         arr[0][7] = white_rook;
@@ -75,8 +75,8 @@ public:
         arr[7][0] = black_rook;
         arr[7][1] = black_knight;
         arr[7][2] = black_bishob;
-        arr[7][3] = black_king;
-        arr[7][4] = black_queen;
+        arr[7][3] = black_queen;
+        arr[7][4] = black_king;
         arr[7][5] = black_bishob;
         arr[7][6] = black_knight;
         arr[7][7] = black_rook;
@@ -90,7 +90,7 @@ public:
     {
         for(int i = 0; i < 8; i++)
         {
-            for(int j = 0; j < 8; j++)
+            for(int j = 7; j >= 0; j--)
                 cout << convert(arr[i][j]) << " ";
             cout << "\n";
         }
@@ -105,7 +105,7 @@ public:
     {
         for(int i = 7; i >= 0; i--)
         {
-            for(int j = 7; j >= 0; j--)
+            for(int j = 0; j < 8; j++)
                 cout << convert(arr[i][j]) << " ";
             cout << endl;
         }
@@ -141,5 +141,14 @@ public:
     int get_id(coor &loction)
     {
         return arr[loction.x][loction.y];
+    }
+    /**
+     * empty - make this square empty
+     * @location: the loction of this square
+     * return: void funtion
+     */
+    void empty(coor loction)
+    {
+        arr[loction.x][loction.y] = 0;
     }
 };

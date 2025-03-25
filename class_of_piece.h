@@ -30,6 +30,14 @@ protected:
         (board_one.get_id(loction) % 2 == board_one.get_id(loction) % 2)
         ? false : true;
     }
+    /**
+     * die - is a function to kill the pieces
+     * return: is a void function
+     */
+    void die(coor &piece_loction)
+    {
+        board_one.empty(piece_loction);
+    }
 public:
     //contractor
     piece(pices id, coor &square_occiped)
@@ -40,8 +48,8 @@ public:
     }
     virtual bool bin(coor &input) = 0;
     virtual bool move(coor &input) = 0;
-    virtual bool capture(coor &input) = 0;
+    //done
+    virtual bool kill(coor &input) = 0;
     //done
     virtual set<coor> range_of_motion() = 0;
-    virtual void die() = 0;
 };
