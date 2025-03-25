@@ -7,7 +7,6 @@ int main()
     cout << "the x is " << test.x << "the y is " << test.y << endl;
 
     b1.print_board_for_white();
-
-    cout << b1.free(test);
-    cout << endl;
+    coor loc = {0, 0};
+    cout << b1.get_id(loc);
 }

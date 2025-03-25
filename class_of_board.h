@@ -133,5 +133,13 @@ public:
         ret.y = square[1] - '1';
         return ret;
     }
-
+    /**
+     * get_id - is a funtion to get id of pieces by coordinates
+     * @loction: is the x and y axises for the pieces
+     * return: the id of the pieces
+     */
+    int get_id(coor &loction)
+    {
+        return arr[loction.x][loction.y];
+    }
 };
