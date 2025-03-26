@@ -118,7 +118,7 @@ public:
      */
     bool free(coor &location)
     {
-	    return arr[location.x][location.y] == 0;
+	    return arr[location.y][location.x] == 0;
     }
     /**
      * square_to_coordinates - is a function convert the string
@@ -140,7 +140,7 @@ public:
      */
     int get_id(coor &loction)
     {
-        return arr[loction.x][loction.y];
+        return arr[loction.y][loction.x];
     }
     /**
      * empty - make this square empty
@@ -149,6 +149,6 @@ public:
      */
     void empty(coor loction)
     {
-        arr[loction.x][loction.y] = 0;
+        arr[loction.y][loction.x] = 0;
     }
 };

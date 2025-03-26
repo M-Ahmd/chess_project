@@ -107,7 +107,7 @@ public:
         this->name = name;
         this->color = color;
     }
-    void enter_move()
+    string enter_move()
     {
         string move = "";
         do
@@ -115,6 +115,7 @@ public:
             cout << "Enter a true move plz\n";
             cin >> move;
         }while(!valid_syntax(move));
+        return move;
     }
 
 };
