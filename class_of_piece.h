@@ -1,13 +1,22 @@
 #include<set>
-#include"class_of_board.h"
+#include "class_of_game.h"
 using namespace std;
 class piece
 {
-protected:
+private:
+    game g1;
     pices id;
     bool color;
     coor square_occiped;
-    board board_one;
+    set<coor> motions;
+
+    
+
+    
+    void set_color(pices &id)
+    {
+        color = !(id % 2);
+    }
     /**
      * true_coor - is a function to check the coordintes
      * still in the board or not
@@ -27,24 +36,291 @@ protected:
      */
     bool enimy_loction(coor &loction)
     {
-        (board_one.get_id(loction) % 2 == board_one.get_id(loction) % 2)
-        ? false : true;
+        return !(id % 2 == g1.get_id(loction) % 2) || g1.free_square(loction);
     }
     /**
-     * die - is a function to kill the pieces
+     * knight_motions - is a function to set knight motions
+     * return: void funcion
+     */
+    void knight_motions()
+    {   
+        coor left_north = {square_occiped.x + 2, square_occiped.y + 1};
+        if(true_coor(left_north) && enimy_loction(left_north)) motions.insert(left_north);
+
+        coor left_south = {square_occiped.x + 2, square_occiped.y - 1};
+        if(true_coor(left_south) && enimy_loction(left_south)) motions.insert(left_south);
+        
+        coor right_north = {square_occiped.x - 2, square_occiped.y + 1};
+        if(true_coor(right_north) && enimy_loction(right_north)) motions.insert(right_north);
+        coor right_south = {square_occiped.x - 2, square_occiped.y - 1};
+        if(true_coor(right_south) && enimy_loction(right_south)) motions.insert(right_south);
+
+        coor north_left = {square_occiped.x + 1, square_occiped.y + 2};
+        if(true_coor(north_left) && enimy_loction(north_left)) motions.insert(north_left);
+        
+        coor south_left = {square_occiped.x + 1, square_occiped.y - 2};
+        if(true_coor(south_left) && enimy_loction(south_left)) motions.insert(south_left);
+        
+        coor north_right = {square_occiped.x - 1, square_occiped.y + 2};
+        if(true_coor(north_right) && enimy_loction(north_right)) motions.insert(north_right);
+        
+        coor south_right = {square_occiped.x - 1, square_occiped.y - 2};
+        if(true_coor(south_right) && enimy_loction(south_right)) motions.insert(south_right);
+    }
+    /**
+     * bishob_motions - is a function set motions of the bishob
      * return: is a void function
      */
-    void die(coor &piece_loction)
+    void bishob_motions()
     {
-        board_one.empty(piece_loction);
+        //for x + 1, y + 1
+        for(coor tem = {square_occiped.x + 1, square_occiped.y + 1};
+        true_coor(tem); tem = {tem.x + 1, tem.y + 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+        //for x - 1, y - 1
+        for(coor tem = {square_occiped.x - 1, square_occiped.y - 1};
+        true_coor(tem); tem = {tem.x - 1, tem.y - 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+        
+        //for x + 1, y - 1
+        for(coor tem = {square_occiped.x + 1, square_occiped.y - 1};
+        true_coor(tem); tem = {tem.x + 1, tem.y - 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+            
+        //for x - 1, y + 1
+        for(coor tem = {square_occiped.x - 1, square_occiped.y + 1};
+        true_coor(tem); tem = {tem.x - 1, tem.y + 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+    
+    }
+    /**
+     * rook_motions - is a function to set the motions to the rook
+     * return: a void functions
+     */
+    void rook_motions()
+    {
+        //for x + 1, y
+        for(coor tem = {square_occiped.x + 1, square_occiped.y};
+        true_coor(tem); tem = {tem.x + 1, tem.y})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+        //for x, y + 1
+        for(coor tem = {square_occiped.x, square_occiped.y + 1};
+        true_coor(tem); tem = {tem.x, tem.y + 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+        //for x - 1, y
+        for(coor tem = {square_occiped.x - 1, square_occiped.y};
+        true_coor(tem); tem = {tem.x - 1, tem.y})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+        //for x, y - 1
+        for(coor tem = {square_occiped.x, square_occiped.y - 1};
+        true_coor(tem); tem = {tem.x, tem.y - 1})
+            if(g1.free_square(tem))
+                motions.insert(tem);
+            else if(enimy_loction(tem))
+            {
+                motions.insert(tem);
+                break;
+            }
+            else if(!enimy_loction(tem))
+                break;
+    }
+    /**
+     * queen_motions - is a function to set the motions to the queen
+     * return: is a void function
+     */
+    void queen_motions()
+    {
+        rook_motions();
+        bishob_motions();
+    }
+    /**
+     * pawn_motions - is a function to set the motions to the
+     * black pawn
+     * return: is a void function
+     */
+    void black_pawn_motions()
+    {
+        //moves
+        if(square_occiped.y == 6)//intial
+        {
+            coor loction = {square_occiped.y - 2, square_occiped.x};
+            if(g1.free_square(loction))
+                motions.insert(loction);
+        }
+        coor forward = {square_occiped.y - 1, square_occiped.x};
+        if(g1.free_square(forward))
+            motions.insert(forward);
+        //capture
+        coor cap1 = {square_occiped.y - 1, square_occiped.x + 1};
+        if(enimy_loction(cap1))
+            motions.insert(cap1);
+        coor cap2 = {square_occiped.y - 1, square_occiped.x - 1};
+        if(enimy_loction(cap2))
+            motions.insert(cap2);
+        
+
+    }
+    /**
+     * pawn_motions - is a function to set the motions to the
+     * white pawn
+     * return: is a void function
+     */
+    void white_pawn_motions()
+    {
+        //moves
+        if(square_occiped.y == 1)//intial
+        {
+            coor loction = {square_occiped.y + 2, square_occiped.x};
+            if(g1.free_square(loction))
+                motions.insert(loction);
+        }
+        coor forward = {square_occiped.y + 1, square_occiped.x};
+        if(g1.free_square(forward))
+            motions.insert(forward);
+        //capture
+        coor cap1 = {square_occiped.y + 1, square_occiped.x - 1};
+        if(enimy_loction(cap1))
+            motions.insert(cap1);
+        coor cap2 = {square_occiped.y + 1, square_occiped.x + 1};
+        if(enimy_loction(cap2))
+            motions.insert(cap2);
+        
+
+    }
+    /**
+     * king_move - is a function that set the motions of the 
+     * king
+     * return: is a void function
+     */
+    void king_motions()
+    {
+        coor left = {square_occiped.x - 1, square_occiped.y};
+        if(true_coor(left) && enimy_loction(left)) motions.insert(left);
+
+        coor right = {square_occiped.x + 1, square_occiped.y};
+        if(true_coor(right) && enimy_loction(right)) motions.insert(right);
+        
+        coor up = {square_occiped.x , square_occiped.y + 1};
+        if(true_coor(up) && enimy_loction(up)) motions.insert(up);
+
+        coor down = {square_occiped.x , square_occiped.y - 1};
+        if(true_coor(down) && enimy_loction(down)) motions.insert(down);
+
+        coor right_up = {square_occiped.x + 1, square_occiped.y + 1};
+        if(true_coor(right_up) && enimy_loction(right_up)) motions.insert(right_up);
+
+        coor left_down = {square_occiped.x - 1, square_occiped.y - 1};
+        if(true_coor(left_down) && enimy_loction(left_down)) motions.insert(left_down);
+        
+        coor left_up = {square_occiped.x - 1, square_occiped.y + 1};
+        if(true_coor(left_up) && enimy_loction(left_up)) motions.insert(left_up);
+
+        coor right_down = {square_occiped.x + 1, square_occiped.y - 1};
+        if(true_coor(right_down) && enimy_loction(right_down)) motions.insert(right_down);
     }
 public:
+    /**
+     * set_motions - is a function to set motions to every pieces
+     * return: void function
+     */
+    void set_motions()
+    {
+        switch (id)
+        {
+            case black_knight:
+            case white_knight:
+                knight_motions();
+                break;
+            case white_bishob:
+            case black_bishob:
+                bishob_motions();
+                break;
+            case white_rook:
+            case black_rook:
+                rook_motions();
+                break;
+            case white_queen:
+            case black_queen:
+                queen_motions();
+                break;
+            case black_king:
+            case white_king:
+                king_motions();
+                break;
+            case white_pawn:
+                white_pawn_motions();
+                break;
+            case black_pawn:
+                black_pawn_motions();
+                break;
+        default:
+            break;
+        }
+    }
+
     //contractor
     piece(pices id, coor &square_occiped)
     {
         this->id = id;
-        this->color = !(id % 2);
         this->square_occiped = square_occiped;
+        set_color(id);
+        set_motions();
     }
     virtual bool bin(coor &input) = 0;
     virtual bool move(coor &input) = 0;
