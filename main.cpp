@@ -1,14 +1,13 @@
-#include"class_of_board.h"
-#include"class_of_player.h"
+#include "class_of_piece.h"
 int main()
 {
+    coor square = {0, 1};
+    piece bs(black_pawn, square);
 
-    player pl1("Muhammed", 1);
-    board board1;
+    set<coor> res = bs.get_motions();
+    for (const auto& coord : res)
+    {
+        cout << "(" << coord.x << ", " << coord.y << ")" << endl;
+    }
     
-    string str = pl1.enter_move();
-    coor loction = board1.square_to_coordinates(str);
-    board1.empty(loction);
-    
-    board1.print_board_for_white();
 }

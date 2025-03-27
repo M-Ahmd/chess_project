@@ -196,25 +196,24 @@ private:
      */
     void black_pawn_motions()
     {
-        //moves
-        if(square_occiped.y == 6)//intial
+        // Moves
+        if (square_occiped.y == 6) // Initial
         {
-            coor loction = {square_occiped.y - 2, square_occiped.x};
-            if(g1.free_square(loction))
+            coor loction = {square_occiped.x, square_occiped.y - 2}; // x first
+            if (g1.free_square(loction))
                 motions.insert(loction);
         }
-        coor forward = {square_occiped.y - 1, square_occiped.x};
-        if(g1.free_square(forward))
+        coor forward = {square_occiped.x, square_occiped.y - 1}; // x first
+        if (g1.free_square(forward))
             motions.insert(forward);
-        //capture
-        coor cap1 = {square_occiped.y - 1, square_occiped.x + 1};
-        if(enimy_loction(cap1))
-            motions.insert(cap1);
-        coor cap2 = {square_occiped.y - 1, square_occiped.x - 1};
-        if(enimy_loction(cap2))
-            motions.insert(cap2);
-        
 
+        // Capture
+        coor cap1 = {square_occiped.x + 1, square_occiped.y - 1}; // x first
+        if (enimy_loction(cap1) && !g1.free_square(cap1))
+            motions.insert(cap1);
+        coor cap2 = {square_occiped.x - 1, square_occiped.y - 1}; // x first
+        if (enimy_loction(cap2) && !g1.free_square(cap2))
+            motions.insert(cap2);
     }
     /**
      * pawn_motions - is a function to set the motions to the
@@ -223,26 +222,25 @@ private:
      */
     void white_pawn_motions()
     {
-        //moves
-        if(square_occiped.y == 1)//intial
+        // Moves
+        if (square_occiped.y == 1) // Initial
         {
-            coor loction = {square_occiped.y + 2, square_occiped.x};
-            if(g1.free_square(loction))
+            coor loction = {square_occiped.x, square_occiped.y + 2}; // x first
+            if (g1.free_square(loction))
                 motions.insert(loction);
         }
-        coor forward = {square_occiped.y + 1, square_occiped.x};
-        if(g1.free_square(forward))
+        coor forward = {square_occiped.x, square_occiped.y + 1}; // x first
+        if (g1.free_square(forward))
             motions.insert(forward);
-        //capture
-        coor cap1 = {square_occiped.y + 1, square_occiped.x - 1};
-        if(enimy_loction(cap1))
-            motions.insert(cap1);
-        coor cap2 = {square_occiped.y + 1, square_occiped.x + 1};
-        if(enimy_loction(cap2))
-            motions.insert(cap2);
-        
 
-    }
+        // Capture
+        coor cap1 = {square_occiped.x - 1, square_occiped.y + 1}; // x first
+        if (enimy_loction(cap1) && !g1.free_square(cap1))
+            motions.insert(cap1);
+        coor cap2 = {square_occiped.x + 1, square_occiped.y + 1}; // x first
+        if (enimy_loction(cap2) && !g1.free_square(cap2))
+            motions.insert(cap2);
+}
     /**
      * king_move - is a function that set the motions of the 
      * king
@@ -322,10 +320,8 @@ public:
         set_color(id);
         set_motions();
     }
-    virtual bool bin(coor &input) = 0;
-    virtual bool move(coor &input) = 0;
-    //done
-    virtual bool kill(coor &input) = 0;
-    //done
-    virtual set<coor> range_of_motion() = 0;
+    set<coor> get_motions()
+    {
+        return motions;
+    }  
 };

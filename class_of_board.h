@@ -4,6 +4,12 @@ using namespace std;
 typedef struct cooridnates
 {
     int x, y;
+
+    bool operator<(const cooridnates& other) const
+    {
+        // Compare first by x, then by y
+        return (x < other.x) || (x == other.x && y < other.y);
+    }
 } coor;
 enum pices {white_pawn = 2, black_pawn = 1, white_knight = 4
 , black_knight = 3, white_bishob = 6, black_bishob = 5, white_rook = 8,
