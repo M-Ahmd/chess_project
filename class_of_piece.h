@@ -1,18 +1,14 @@
 #include<set>
 #include "class_of_game.h"
 using namespace std;
-class piece
+class piece : private board
 {
 private:
-    game g1;
     pices id;
     bool color;
     coor square_occiped;
     set<coor> motions;
 
-    
-
-    
     void set_color(pices &id)
     {
         color = !(id % 2);
@@ -36,7 +32,7 @@ private:
      */
     bool enimy_loction(coor &loction)
     {
-        return !(id % 2 == g1.get_id(loction) % 2) || g1.free_square(loction);
+        return !(id % 2 == get_id(loction) % 2) || free(loction);
     }
     /**
      * knight_motions - is a function to set knight motions
@@ -76,7 +72,7 @@ private:
         //for x + 1, y + 1
         for(coor tem = {square_occiped.x + 1, square_occiped.y + 1};
         true_coor(tem); tem = {tem.x + 1, tem.y + 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -88,7 +84,7 @@ private:
         //for x - 1, y - 1
         for(coor tem = {square_occiped.x - 1, square_occiped.y - 1};
         true_coor(tem); tem = {tem.x - 1, tem.y - 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -101,7 +97,7 @@ private:
         //for x + 1, y - 1
         for(coor tem = {square_occiped.x + 1, square_occiped.y - 1};
         true_coor(tem); tem = {tem.x + 1, tem.y - 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -114,7 +110,7 @@ private:
         //for x - 1, y + 1
         for(coor tem = {square_occiped.x - 1, square_occiped.y + 1};
         true_coor(tem); tem = {tem.x - 1, tem.y + 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -134,7 +130,7 @@ private:
         //for x + 1, y
         for(coor tem = {square_occiped.x + 1, square_occiped.y};
         true_coor(tem); tem = {tem.x + 1, tem.y})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -146,7 +142,7 @@ private:
         //for x, y + 1
         for(coor tem = {square_occiped.x, square_occiped.y + 1};
         true_coor(tem); tem = {tem.x, tem.y + 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -158,7 +154,7 @@ private:
         //for x - 1, y
         for(coor tem = {square_occiped.x - 1, square_occiped.y};
         true_coor(tem); tem = {tem.x - 1, tem.y})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -170,7 +166,7 @@ private:
         //for x, y - 1
         for(coor tem = {square_occiped.x, square_occiped.y - 1};
         true_coor(tem); tem = {tem.x, tem.y - 1})
-            if(g1.free_square(tem))
+            if(free(tem))
                 motions.insert(tem);
             else if(enimy_loction(tem))
             {
@@ -200,19 +196,19 @@ private:
         if (square_occiped.y == 6) // Initial
         {
             coor loction = {square_occiped.x, square_occiped.y - 2}; // x first
-            if (g1.free_square(loction))
+            if (free(loction))
                 motions.insert(loction);
         }
         coor forward = {square_occiped.x, square_occiped.y - 1}; // x first
-        if (g1.free_square(forward))
+        if (free(forward))
             motions.insert(forward);
 
         // Capture
         coor cap1 = {square_occiped.x + 1, square_occiped.y - 1}; // x first
-        if (enimy_loction(cap1) && !g1.free_square(cap1))
+        if (enimy_loction(cap1) && !free(cap1))
             motions.insert(cap1);
         coor cap2 = {square_occiped.x - 1, square_occiped.y - 1}; // x first
-        if (enimy_loction(cap2) && !g1.free_square(cap2))
+        if (enimy_loction(cap2) && !free(cap2))
             motions.insert(cap2);
     }
     /**
@@ -226,19 +222,19 @@ private:
         if (square_occiped.y == 1) // Initial
         {
             coor loction = {square_occiped.x, square_occiped.y + 2}; // x first
-            if (g1.free_square(loction))
+            if (free(loction))
                 motions.insert(loction);
         }
         coor forward = {square_occiped.x, square_occiped.y + 1}; // x first
-        if (g1.free_square(forward))
+        if (free(forward))
             motions.insert(forward);
 
         // Capture
         coor cap1 = {square_occiped.x - 1, square_occiped.y + 1}; // x first
-        if (enimy_loction(cap1) && !g1.free_square(cap1))
+        if (enimy_loction(cap1) && free(cap1))
             motions.insert(cap1);
         coor cap2 = {square_occiped.x + 1, square_occiped.y + 1}; // x first
-        if (enimy_loction(cap2) && !g1.free_square(cap2))
+        if (enimy_loction(cap2) && free(cap2))
             motions.insert(cap2);
 }
     /**
@@ -313,15 +309,33 @@ public:
     }
 
     //contractor
-    piece(pices id, coor &square_occiped)
+    piece(coor &square_occiped)
     {
-        this->id = id;
+        this->id = (pices)get_id(square_occiped);
         this->square_occiped = square_occiped;
         set_color(id);
         set_motions();
     }
+    /**
+     * get_motions - is a function the make
+     * every pice know there moves
+     * return: the set of all motions of pieces
+     */
     set<coor> get_motions()
     {
         return motions;
     }  
+    /**
+     * move - is a function to make pieces move
+     * @loction: is the coordinates
+     * return: true_coor ? true : flase
+     */
+    bool move(coor &loction)
+    {
+        
+        if(motions.find(loction) == motions.end()) return false;
+        empty(square_occiped);//make my square empty
+        set_id_to_square(loction, id);
+        return true;
+    }
 };

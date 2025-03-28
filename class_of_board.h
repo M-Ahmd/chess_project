@@ -153,8 +153,18 @@ public:
      * @location: the loction of this square
      * return: void funtion
      */
-    void empty(coor loction)
+    void empty(coor &loction)
     {
         arr[loction.y][loction.x] = 0;
+    }
+    /**
+     * set_id_to_square - is a function to set_id_to_square
+     * @loction: is the coordinate of the board
+     * @id: is the id of the pieces
+     * return: is a void function
+     */
+    void set_id_to_square(coor &loction, pices &id)
+    {
+        arr[loction.y][loction.x] = id;
     }
 };

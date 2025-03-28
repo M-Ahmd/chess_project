@@ -1,13 +1,11 @@
 #include "class_of_piece.h"
 int main()
 {
-    coor square = {0, 1};
-    piece bs(black_pawn, square);
+    coor square = {1, 0};
+    piece kn(square);
+    coor loc = {2, 2};
 
-    set<coor> res = bs.get_motions();
-    for (const auto& coord : res)
-    {
-        cout << "(" << coord.x << ", " << coord.y << ")" << endl;
-    }
+    kn.move(loc);
+    kn.print_board_for_white();
     
 }
